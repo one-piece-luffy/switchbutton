@@ -57,8 +57,6 @@
         <item>@string/title_activity_style_in_code</item>
         <item>@string/title_activity_use</item>
         <item>@string/title_activity_recycler_view</item>
-        <item>@string/copyright</item>
-        <item>@string/license</item>
     </string-array>
 
     <string name="title_activity_style">Style in xml</string>

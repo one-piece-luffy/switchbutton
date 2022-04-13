@@ -166,11 +166,17 @@ public class SwitchButton extends CompoundButton {
         int textThumbInset = 0;
         int textExtra = 0;
         int textAdjust = 0;
-
+        ColorStateList textColors = getTextColors();
+        int defaultTextColor=0xff000000;
+        if (textColors != null) {
+            defaultTextColor = textColors.getDefaultColor();
+        }
         TypedArray ta = attrs == null ? null : getContext().obtainStyledAttributes(attrs, R.styleable.SwitchButton);
         if (ta != null) {
             thumbDrawable = ta.getDrawable(R.styleable.SwitchButton_kswThumbDrawable);
             thumbColor = ta.getColorStateList(R.styleable.SwitchButton_kswThumbColor);
+            mOnTextColor = ta.getColor(R.styleable.SwitchButton_kswTextOnColor,defaultTextColor);
+            mOffTextColor = ta.getColor(R.styleable.SwitchButton_kswTextOffColor,defaultTextColor);
             margin = ta.getDimension(R.styleable.SwitchButton_kswThumbMargin, margin);
             marginLeft = ta.getDimension(R.styleable.SwitchButton_kswThumbMarginLeft, margin);
             marginRight = ta.getDimension(R.styleable.SwitchButton_kswThumbMarginRight, margin);
@@ -663,12 +669,6 @@ public class SwitchButton extends CompoundButton {
         }
 
         int[] nextState = isChecked() ? UNCHECKED_PRESSED_STATE : CHECKED_PRESSED_STATE;
-        ColorStateList textColors = getTextColors();
-        if (textColors != null) {
-            int defaultTextColor = textColors.getDefaultColor();
-            mOnTextColor = textColors.getColorForState(CHECKED_PRESSED_STATE, defaultTextColor);
-            mOffTextColor = textColors.getColorForState(UNCHECKED_PRESSED_STATE, defaultTextColor);
-        }
         if (!mIsBackUseDrawable && mBackColor != null) {
             mCurrBackColor = mBackColor.getColorForState(getDrawableState(), mCurrBackColor);
             mNextBackColor = mBackColor.getColorForState(nextState, mCurrBackColor);

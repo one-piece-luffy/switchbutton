@@ -113,9 +113,12 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:background="#E0E0E0"
+                android:textColor="#0000ff"
                 app:kswTextExtra="10dp"
                 app:kswTextOff="OFF"
                 app:kswTextOn="ON"
+                app:kswTextOnColor="#ff0000"
+                app:kswTextOffColor="#ffff00"
                 app:kswThumbMargin="-5dp"
                 />
 

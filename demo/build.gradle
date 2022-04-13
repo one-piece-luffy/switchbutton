@@ -23,5 +23,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation project(':library')
+//    implementation 'com.github.one-piece-luffy:switchbutton:1.0.1'
+
 //    implementation 'com.kyleduo.switchbutton:library:2.0.3'
 }

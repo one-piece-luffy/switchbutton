@@ -94,6 +94,8 @@ public class SwitchButton extends CompoundButton {
     private boolean mReady = false;
     private boolean mCatch = false;
     private UnsetPressedState mUnsetPressedState;
+    private ColorStateList mCheckBackColorState;
+    private int mCheckBackColor;
 
     private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
 
@@ -177,6 +179,7 @@ public class SwitchButton extends CompoundButton {
             thumbColor = ta.getColorStateList(R.styleable.SwitchButton_kswThumbColor);
             mOnTextColor = ta.getColor(R.styleable.SwitchButton_kswTextOnColor,defaultTextColor);
             mOffTextColor = ta.getColor(R.styleable.SwitchButton_kswTextOffColor,defaultTextColor);
+            mCheckBackColorState = ta.getColorStateList(R.styleable.SwitchButton_kswCheckBackColor);
             margin = ta.getDimension(R.styleable.SwitchButton_kswThumbMargin, margin);
             marginLeft = ta.getDimension(R.styleable.SwitchButton_kswThumbMarginLeft, margin);
             marginRight = ta.getDimension(R.styleable.SwitchButton_kswThumbMarginRight, margin);
@@ -235,6 +238,7 @@ public class SwitchButton extends CompoundButton {
             mCurrThumbColor = mThumbColor.getDefaultColor();
         }
 
+
         // thumbSize
         mThumbWidth = ceil(thumbWidth);
         mThumbHeight = ceil(thumbHeight);
@@ -248,7 +252,11 @@ public class SwitchButton extends CompoundButton {
             mCurrBackColor = mBackColor.getDefaultColor();
             mNextBackColor = mBackColor.getColorForState(CHECKED_PRESSED_STATE, mCurrBackColor);
         }
-
+        if (mCheckBackColorState != null) {
+            mCheckBackColor = mCheckBackColorState.getDefaultColor();
+        } else {
+            mCheckBackColor = mCurrBackColor;
+        }
         // margin
         mThumbMargin.set(marginLeft, marginTop, marginRight, marginBottom);
 
@@ -603,7 +611,12 @@ public class SwitchButton extends CompoundButton {
                 alpha = (int) (255 * getProgress());
                 colorAlpha = Color.alpha(belowColor);
                 colorAlpha = colorAlpha * alpha / 255;
-                mPaint.setARGB(colorAlpha, Color.red(belowColor), Color.green(belowColor), Color.blue(belowColor));
+                if (isChecked()) {
+                    mPaint.setColor(mCheckBackColor);
+                } else {
+                    mPaint.setARGB(colorAlpha, Color.red(belowColor), Color.green(belowColor), Color.blue(belowColor));
+                }
+
                 canvas.drawRoundRect(mBackRectF, mBackRadius, mBackRadius, mPaint);
 
                 // next back
@@ -615,7 +628,12 @@ public class SwitchButton extends CompoundButton {
 
                 mPaint.setAlpha(255);
             } else {
-                mPaint.setColor(mCurrBackColor);
+                if (isChecked()) {
+                    mPaint.setColor(mCheckBackColor);
+                } else {
+                    mPaint.setColor(mCurrBackColor);
+                }
+
                 canvas.drawRoundRect(mBackRectF, mBackRadius, mBackRadius, mPaint);
             }
         }
